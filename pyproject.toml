@@ -1,0 +1,75 @@
+[project]
+name = "jaxcfm"
+version = "0.0.1b"
+license = { text = "MIT" }
+description = "Conditional Flow Matching in JAX"
+readme = "README.md"
+authors = [
+    {name="Nikolai Koehler", email="nikolai.koehler@tum.de"}
+]
+maintainers = [
+    {name="Nikolai Koehler", email="nikolai.koehler@tum.de"}
+]
+keywords = [
+    "Generative AI",
+    "Conditional Flow Matching"
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3"
+]
+# TODO: version requirements
+dependencies = [
+    "equinox",
+    "jax",
+    "jaxlib",
+    "jaxtyping",
+    "ott-jax"
+]
+
+[project.optional-dependencies]
+models = [ "diffrax", "matplotlib", "scanpy", "scprep" ]
+dev = [ "coverage", "flake8", "Flake8-pyproject", "pytest", "pytest-cov" ]
+docs = [
+    "furo", "Sphinx", "sphinxcontrib-bibtex", "sphinx-copybutton"
+]
+
+
+[project.urls]
+Source = "https://www.github.com/nklkhlr/jaxcfm"
+Documentation = "https://jaxcfm.readthedocs.io"
+
+
+[tool.setuptools]
+packages = ["jaxcfm"]
+
+
+[tool.flake8]
+max-line-length = 80
+exclude = [
+    ".git",
+    "__pycache__",
+    "docs"
+]
+extend-ignore = [
+    # somehow flake8 can't handle jaxtyping annotations
+    "F821",
+    "F722"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["jaxcfm"]
+
+[tool.coverage.xml]
+output = "coverage/coverage.xml"
+
+[tool.coverage.html]
+show_contexts = true
+directory = "coverage/html"
