@@ -1,0 +1,26 @@
+name: Linting
+
+on:
+  # TODO: add back in once main / dev are seperate branches
+  # push:
+  #   branches:
+  #     - main
+  #     - dev
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - dev
+  workflow_dispatch:
+
+
+jobs:
+  linting:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run linting
+        run: |
+          pip install flake8
+          flake8

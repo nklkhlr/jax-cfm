@@ -1,0 +1,31 @@
+name: Publishing
+
+on:
+  release:
+    types: [created, edited]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/jax-cfm
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: build
+        run: |
+          pip install build
+          python3 -m build
+
+      - name: publish pypi
+        uses: pypa/gh-action-pypi-publish@release/v1

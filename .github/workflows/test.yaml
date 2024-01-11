@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  # TODO: add back in once main / dev are seperate branches
+  # push:
+  #   branches:
+  #     - main
+  #     - dev
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - dev
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Install python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run unit tests with coverage
+        run: python -m pytest --cov-report=xml --cov=jaxcfm
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV }}
+          files: ./coverage/coverage.xml
